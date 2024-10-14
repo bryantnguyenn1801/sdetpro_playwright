@@ -1,6 +1,6 @@
 import test from "@playwright/test";
 import { log } from "console";
-import { getAdParams, scrollToBottom } from "../utils/PageHelper";
+import { getAdParams, scrollToBottom } from "../../utils/PageHelper";
 
 test('Handle JS Dropdown', async ({ page }) => {
     await page.goto('/javascript_alerts');

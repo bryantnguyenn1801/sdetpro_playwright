@@ -1,5 +1,5 @@
 import test from "@playwright/test";
-import HomePage from "../models/pages/HomePage";
+import HomePage from "../../models/pages/HomePage";
 
 
 test('Test List of ProductItem Components', async ({ page }) => {
