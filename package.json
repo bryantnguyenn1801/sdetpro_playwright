@@ -1,0 +1,12 @@
+{
+  "name": "sdetpro_pw",
+  "version": "1.0.0",
+  "description": "",
+  "dependencies": {
+    "package-name": "^0.1.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.48.0",
+    "@types/node": "^22.5.4"
+  }
+}
