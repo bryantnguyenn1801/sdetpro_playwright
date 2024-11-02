@@ -15,7 +15,7 @@ export const cheapComputerData = [
     "computerCompClass": CheapComputerComponent,
     "processorType": "Fast",
     "ram": "4 GB",
-    "hdd": "400 GB",
+    "hdd": "320 GB",
     "software": "Office Suite"
   },
   {

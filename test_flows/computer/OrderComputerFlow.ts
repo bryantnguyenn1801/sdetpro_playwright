@@ -17,8 +17,21 @@ export class OrderComputerFlow extends LoginFlow {
     async buildComputerSpecAndAddToCart() {
         const computerDetailsPage: ComputerDetailsPage = new ComputerDetailsPage(this.page);
         const computerComp: ComputerEssentialComponent = computerDetailsPage.computerComp(this.computerData.computerCompClass);
-        await computerComp.selectHDD(this.computerData.hdd);
-        await computerComp.selectRAM(this.computerData.ram);
+        const {
+            processorType,
+            hdd,
+            ram,
+            software,
+            os
+        } = this.computerData;
+        await computerComp.unselectAllOptions();
+        await computerComp.selectProcessor(processorType);
+        await computerComp.selectHDD(hdd);
+        await computerComp.selectRAM(ram);
+        await computerComp.selectSoftware(software);
+        if (os) {
+            await computerComp.selectOS(os);
+        }
     }
 
 }
