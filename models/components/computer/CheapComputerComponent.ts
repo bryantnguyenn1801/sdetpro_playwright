@@ -9,7 +9,11 @@ export class CheapComputerComponent extends ComputerEssentialComponent {
     }
 
     async selectRAM(type: string) {
-        console.log('CheapComputerComponent | Select RAM');
+        await this.selectCompOptions(type);
+    }
+
+    async selectHDD(type: string){
+        await this.selectCompOptions(type);
     }
 
 }

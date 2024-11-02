@@ -11,4 +11,8 @@ export class StandardComputerComponent extends ComputerEssentialComponent {
         console.log('StandardComputerComponent | Select RAM');
     }
     
+    async selectHDD(type: string){
+        console.log('StandardComputerComponent | Select HDD');
+    }
+
 }

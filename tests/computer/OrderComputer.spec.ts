@@ -1,26 +1,18 @@
 import test, { Page } from "@playwright/test";
-import { ComputerType } from "../../types/ComputerType";
 import { OrderComputerFlow } from "../../test_flows/computer/OrderComputerFlow";
-import { StandardComputerComponent } from "../../models/components/computer/StandardComputerComponent";
-import { CheapComputerComponent } from "../../models/components/computer/CheapComputerComponent";
-import { ComputerComponentConstructor } from "../../models/pages/ComputerDetailsPage";
-import { ComputerEssentialComponent } from "../../models/components/computer/ComputerEssentialComponent";
-import { ExpensiveComputerComponent } from "../../models/components/computer/ExpensiveComputerComponent";
+import { cheapComputerData } from '../../test-data/computer/CheapComputerData';
 
-export interface ComputerDataType {
-    ram: string,
-    os?: string,
-    computerCompClass: ComputerComponentConstructor<ComputerEssentialComponent>
-}
+cheapComputerData.forEach(computerData => {
+    test(`Test cheap computer component | RAM: ${computerData.ram}`, async ({ page }) => {
+        console.log(computerData);
+        
+        await page.goto('/build-your-cheap-own-computer');
 
-test(`Test Buying Computer | First design`, async ({ page }) => {
+        const orderComputerFlow: OrderComputerFlow = new OrderComputerFlow(page, computerData);
+        await orderComputerFlow.login();
+        await orderComputerFlow.buildComputerSpecAndAddToCart();
 
-    const testData: ComputerDataType = {
-        ram: "2 GB",
-        computerCompClass: ExpensiveComputerComponent,
-    }
-
-    const orderComputerFlow: OrderComputerFlow = new OrderComputerFlow(page, testData.computerCompClass, testData);
-    orderComputerFlow.buildComputerSpecAndAddToCart();
-
+        // DEBUG PURPOSE ONLY
+        await page.waitForTimeout(3 * 1000);
+    })
 })
