@@ -3,8 +3,11 @@ import { ComputerComponentConstructor, ComputerDetailsPage } from "../../models/
 import { ComputerEssentialComponent } from "../../models/components/computer/ComputerEssentialComponent";
 import { ComputerDataType } from "../../test-data/computer/ComputerDataType";
 import { LoginFlow } from "../LoginFlow";
+import { error } from "console";
+import { ShoppingCartPage } from "../../models/pages/ShoppingCartPage";
 
 export class OrderComputerFlow extends LoginFlow {
+    private totalPrice: number;
 
     constructor(
         page: Page,
@@ -37,13 +40,13 @@ export class OrderComputerFlow extends LoginFlow {
         let additionalPrice: number = processorAdditionalPrice + hddAdditionalPrice + ramAdditionalPrice + osAddtionalPrice + softwareAdditionalPrice;
         let itemPrice = originPrice + additionalPrice;
         let itemQuantity: number = await computerComp.getProductQuantity();
-        const totalPrice = itemPrice * itemQuantity;
-        console.log(`totalPrice: ${totalPrice}`);
+        this.totalPrice = itemPrice * itemQuantity;
+        console.log(`totalPrice: ${this.totalPrice}`);
 
         // Add to Cart
         await computerComp.clickOnAddToCartBtn();
         const barNotiText = await computerDetailsPage.getBarNotiText();
-        if(!barNotiText?.startsWith('The product has been added')){
+        if (!barNotiText?.startsWith('The product has been added')) {
             throw new Error('Failed to add product to cart!');
         }
 
@@ -63,5 +66,16 @@ export class OrderComputerFlow extends LoginFlow {
         }
         return 0;
     }
+    async verifyShoppingCart() {
+        const shoppingCartPage = new ShoppingCartPage(this.page);
+        const cartItemRowComponentList = await shoppingCartPage.cartItemRowComponentList();
+        const totalComponent = await shoppingCartPage.totalComponent();
+
+    }
+
+    async agreeTOSAndCheckout() {
+        throw new Error("TBD");
+    }
+
 
 }
