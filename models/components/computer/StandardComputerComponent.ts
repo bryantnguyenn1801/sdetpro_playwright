@@ -1,17 +1,14 @@
-import { Page } from "@playwright/test";
-import { ComputerComponent } from "./ComputerComponent";
+import { Locator, Page } from "@playwright/test";
+import { ComputerEssentialComponent } from "./ComputerEssentialComponent";
 
-export class StandardComputerComponent implements ComputerComponent {
+export class StandardComputerComponent extends ComputerEssentialComponent {
 
-    constructor(private page: Page){
-        this.page = page;
+    constructor(component: Locator){
+        super(component)
     }
 
-    private ramSel: string = "";
-
-    async selectRAM(value: string) {
-        await this.page.locator(this.ramSel);
-        console.log('Standard ComputerComponent | Select RAM');
+    async selectRAM(type: string) {
+        console.log('StandardComputerComponent | Select RAM');
     }
-
+    
 }

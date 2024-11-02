@@ -26,14 +26,6 @@ export class HomePage {
         return new FooterComponent(this.page.locator(FooterComponent.selector));
     }
 
-    computerComponent(computerType: string): ComputerComponent {
-        if (computerType === ComputerType.standard) {
-            return new StandardComputerComponent(this.page);
-        } else {
-            return new CheapComputerComponent();
-        }
-    }
-
     /**
      * Solution 01: Directly use the component in test flow, not page
      * Solution 02: Using component in page

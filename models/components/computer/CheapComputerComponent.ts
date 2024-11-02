@@ -1,9 +1,15 @@
-import { ComputerComponent } from "./ComputerComponent";
+import { Locator } from "@playwright/test";
+import { ComputerEssentialComponent } from "./ComputerEssentialComponent";
 
-export class CheapComputerComponent implements ComputerComponent {
 
-    selectRAM(value: string) {
-        console.log('Cheap  ComputerComponent | Select RAM');
+export class CheapComputerComponent extends ComputerEssentialComponent {
+
+    constructor(component: Locator){
+        super(component)
+    }
+
+    async selectRAM(type: string) {
+        console.log('CheapComputerComponent | Select RAM');
     }
 
 }
