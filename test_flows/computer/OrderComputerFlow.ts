@@ -25,13 +25,43 @@ export class OrderComputerFlow extends LoginFlow {
             os
         } = this.computerData;
         await computerComp.unselectAllOptions();
-        await computerComp.selectProcessor(processorType);
-        await computerComp.selectHDD(hdd);
-        await computerComp.selectRAM(ram);
-        await computerComp.selectSoftware(software);
+        const processorAdditionalPrice = this.getAdditionalPrice(await computerComp.selectProcessor(processorType));
+        const hddAdditionalPrice = this.getAdditionalPrice(await computerComp.selectHDD(hdd));
+        const ramAdditionalPrice = this.getAdditionalPrice(await computerComp.selectRAM(ram));
+        const softwareAdditionalPrice = this.getAdditionalPrice(await computerComp.selectSoftware(software));
+        let osAddtionalPrice: number = 0;
         if (os) {
-            await computerComp.selectOS(os);
+            osAddtionalPrice = this.getAdditionalPrice(await computerComp.selectOS(os));
         }
+        const originPrice: number = await computerComp.getProductPrice();
+        let additionalPrice: number = processorAdditionalPrice + hddAdditionalPrice + ramAdditionalPrice + osAddtionalPrice + softwareAdditionalPrice;
+        let itemPrice = originPrice + additionalPrice;
+        let itemQuantity: number = await computerComp.getProductQuantity();
+        const totalPrice = itemPrice * itemQuantity;
+        console.log(`totalPrice: ${totalPrice}`);
+
+        // Add to Cart
+        await computerComp.clickOnAddToCartBtn();
+        const barNotiText = await computerDetailsPage.getBarNotiText();
+        if(!barNotiText?.startsWith('The product has been added')){
+            throw new Error('Failed to add product to cart!');
+        }
+
+        // Navigate 
+        await computerDetailsPage.headerComponent().clickOnShoppingCartLink();
+    }
+
+    private getAdditionalPrice(optionText: string | null): number {
+        if (optionText === null) {
+            optionText = '';
+        }
+
+        const regex = /\+\d+\.\d+/g;
+        const matches = optionText.match(regex);
+        if (matches) {
+            return Number(matches[0].replace('+', '').trim());
+        }
+        return 0;
     }
 
 }

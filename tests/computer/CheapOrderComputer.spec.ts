@@ -3,9 +3,7 @@ import { OrderComputerFlow } from "../../test_flows/computer/OrderComputerFlow";
 import { cheapComputerData } from '../../test-data/computer/CheapComputerData';
 
 cheapComputerData.forEach(computerData => {
-    test(`Test cheap computer component | RAM: ${computerData.ram}`, async ({ page }) => {
-        console.log(computerData);
-        
+    test(`Test cheap computer component | RAM: ${computerData.ram}`, async ({ page }) => {        
         await page.goto('/build-your-cheap-own-computer');
 
         const orderComputerFlow: OrderComputerFlow = new OrderComputerFlow(page, computerData);

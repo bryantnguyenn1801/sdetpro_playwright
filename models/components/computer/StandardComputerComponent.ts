@@ -9,19 +9,19 @@ export class StandardComputerComponent extends ComputerEssentialComponent {
         super(component)
     }
 
-    async selectProcessor(type: string) {
+    async selectProcessor(type: string): Promise<string | null> {
         const PROCESSOR_DROP_DOWN_INDEX = 0;
         const allDropdownLoc: Locator[] = await this.component.locator(this.allDropdownSel).all();
-        await this.selectOption(allDropdownLoc[PROCESSOR_DROP_DOWN_INDEX], type);
+        return await this.selectOption(allDropdownLoc[PROCESSOR_DROP_DOWN_INDEX], type);
     }
 
-    async selectRAM(type: string) {
+    async selectRAM(type: string): Promise<string | null> {
         const RAM_DROP_DOWN_INDEX = 1;
         const allDropdownLoc: Locator[] = await this.component.locator(this.allDropdownSel).all();
-        await this.selectOption(allDropdownLoc[RAM_DROP_DOWN_INDEX], type);
+        return await this.selectOption(allDropdownLoc[RAM_DROP_DOWN_INDEX], type);
     }
 
-    private async selectOption(dropdown: Locator, type: string) {
+    private async selectOption(dropdown: Locator, type: string): Promise<string | null> {
         const allOptions: Locator[] = await dropdown.locator('option').all();
         let optionIndex = -1;
         let optionFullText: string | null = '';
@@ -36,6 +36,8 @@ export class StandardComputerComponent extends ComputerEssentialComponent {
             throw new Error(`There is no matching option for ${type}`);
         }
         await dropdown.selectOption({ index: optionIndex });
+        return optionFullText;
     }
+
 
 }

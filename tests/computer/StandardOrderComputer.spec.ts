@@ -4,8 +4,6 @@ import { standardComputerData } from '../../test-data/computer/StandardComputerD
 
 standardComputerData.forEach(computerData => {
     test(`Test standar computer component | RAM: ${computerData.ram}`, async ({ page }) => {
-        console.log(computerData);
-
         await page.goto('/build-your-own-computer');
 
         const orderComputerFlow: OrderComputerFlow = new OrderComputerFlow(page, computerData);
@@ -13,6 +11,6 @@ standardComputerData.forEach(computerData => {
         await orderComputerFlow.buildComputerSpecAndAddToCart();
 
         // DEBUG PURPOSE ONLY
-        await page.waitForTimeout(5 * 1000);
+        await page.waitForTimeout(3 * 1000);
     })
 })
